@@ -642,3 +642,6 @@ label {
 .Admin_overflow div{
   transition: transform 0.5s  ease-in-out;
 }
+.btn-hover-effect:hover{
+  transition: transform 0.5s  ease-in-out;
+}

@@ -102,6 +102,9 @@ async function deleteFn4Carou(id){
     setCarouselItems(prev => prev.filter(i => i._id != id))
 }
 
+console.log(updateCarousel)
+
+
   return (
     <div className="row">
       <div className="col col-lg-3 col-md-3" >
@@ -153,24 +156,19 @@ async function deleteFn4Carou(id){
       </button>
 </div>
 
-<div className="row rounded-3 mt-3 px-3 mb-3 " style={{backgroundColor:'rgba(205, 91, 91, 0.3)'}} >
+<div className="row rounded-3 mt-3 px-3 mb-3 "  >
 
 {
   carouselItems.map((i,index)=>(
-  <div className="row my-3" key={index}>
+  <div className="row my-3 py-2 rounded-3" key={index} style={{backgroundColor:'rgba(205, 91, 91, 0.3)'}}>
     <div className="container col-lg-10">
       <div className="d-flex">
 
-        <div className="d-flex justify-content-center align-items-center">
-         <ion-icon className="m-0 p-0" name="ellipsis-vertical-outline"></ion-icon>
-         <ion-icon className="m-0 p-0" name="ellipsis-vertical-outline"></ion-icon>
-        </div>
-
-         <div>
+         <div className="d-flex align-items-center">
           <img src={`http://localhost:5000/uploads/${i.image}`} alt="" className="mx-3" style={{width:'150px',height:'80px',objectFit:'cover', borderRadius:"10px",overflow:'hidden',backgroundPosition:'center'}} />
          </div>
 
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center ms-1">
          <div>
           <h6>{i.title}</h6>
           <p>{i.theme}</p>
@@ -181,8 +179,13 @@ async function deleteFn4Carou(id){
 
       <div className="col col-lg-2 ">
         <div className="d-flex justify-content-around align-items-center h-100">
-           <ion-icon  name="pencil-outline"></ion-icon> 
-           <ion-icon  name="trash-bin-outline" onClick={()=>deleteFn4Carou(i._id)}></ion-icon>
+           {/* <ion-icon  name="pencil-outline"  ></ion-icon> */}
+                 <button type="button" className="btn bg-danger text-light fw-bold p-1 pb-0" data-bs-toggle="modal" data-bs-target="#carouselUpdateform" onClick={()=>setUpdateCarousel(i)}>
+                  <ion-icon  name="pencil-outline"></ion-icon>
+                </button> 
+                 <button className="btn-hover-effect btn bg-danger text-light fw-bold p-1 pb-0">
+                  <ion-icon  name="trash-bin-outline" onClick={()=>deleteFn4Carou(i._id)}></ion-icon>
+                </button>
         </div>
       </div>
    </div>
@@ -203,12 +206,27 @@ async function deleteFn4Carou(id){
       <div class="modal-body">
         {addCarousel && <Admin sendToparent={chlidPropPassing}/>}
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="carouselUpdateform" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content bg-dark">
+      <div class="modal-header">
+        <h1 className="modal-title fs-5 text-light" id="staticBackdropLabel">Add Carousel</h1>
+        <button type="button" class="btn-close bg-light" data-bs-dismiss="modal" aria-label="Close" onClick={()=>setUpdateCarousel(null)}></button>
+      </div>
+      <div class="modal-body">
+        {updateCarousel && (<UpdateCarouselComponent updateCarousel={updateCarousel} />)} 
+      </div>
 
     </div>
   </div>
 </div>
+
+
 </div>
-        {updateCarousel && (<UpdateCarouselComponent updateCarousel={updateCarousel} />)} 
 </div>
   );
 }
